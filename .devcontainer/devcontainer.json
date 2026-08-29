@@ -1,0 +1,39 @@
+{
+  "name": "Elixir + React",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": false,
+      "upgradePackages": false
+    }
+  },
+  "forwardPorts": [4000, 5173, 5432],
+  "portsAttributes": {
+    "4000": { "label": "Phoenix API" },
+    "5173": { "label": "Vite / React" },
+    "5432": { "label": "PostgreSQL", "onAutoForward": "silent" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "JakeBecker.elixir-ls",
+        "phoenixframework.phoenix",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "elixirLS.dialyzerEnabled": true
+      }
+    }
+  },
+  "postCreateCommand": "bash -lc 'mix --version && node --version && npm --version'",
+  "shutdownAction": "stopCompose"
+}

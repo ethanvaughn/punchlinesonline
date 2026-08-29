@@ -1,0 +1,11 @@
+.git
+.gitignore
+_build
+deps
+node_modules
+frontend/node_modules
+frontend/dist
+backend/_build
+backend/deps
+backend/.elixir_ls
+**/.elixir_ls
