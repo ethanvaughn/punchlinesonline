@@ -1,5 +1,8 @@
 import Config
 
+config :backend,
+  token_signing_secret: "D4rkKBlf7B5I2pw8fcdHJvrv/XK2bcdY6NUEsYdTFlQwpk+2osR8vJxtBzOAdQfo"
+
 # Configure your database
 config :backend, Backend.Repo,
   username: "postgres",

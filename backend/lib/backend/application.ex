@@ -10,6 +10,7 @@ defmodule Backend.Application do
     children = [
       BackendWeb.Telemetry,
       Backend.Repo,
+      {AshAuthentication.Supervisor, otp_app: :backend},
       {DNSCluster, query: Application.get_env(:backend, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Backend.PubSub},
       # Start a worker by calling: Backend.Worker.start_link(arg)

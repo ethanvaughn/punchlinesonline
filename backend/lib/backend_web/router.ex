@@ -2,7 +2,10 @@ defmodule BackendWeb.Router do
   use BackendWeb, :router
 
   pipeline :graphql do
-    plug AshGraphql.Plug
+    plug(:accepts, ["json"])
+    plug(:retrieve_from_bearer, :backend)
+    plug(:set_actor, :user)
+    plug(AshGraphql.Plug)
   end
 
   pipeline :api do
@@ -10,14 +13,15 @@ defmodule BackendWeb.Router do
   end
 
   scope "/gql" do
-    pipe_through [:graphql]
+    pipe_through([:graphql])
 
-    forward "/playground", Absinthe.Plug.GraphiQL,
+    forward("/playground", Absinthe.Plug.GraphiQL,
       schema: Module.concat(["BackendWeb.GraphqlSchema"]),
       socket: Module.concat(["BackendWeb.GraphqlSocket"]),
-      interface: :simple
+      interface: :playground
+    )
 
-    forward "/", Absinthe.Plug, schema: Module.concat(["BackendWeb.GraphqlSchema"])
+    forward("/", Absinthe.Plug, schema: Module.concat(["BackendWeb.GraphqlSchema"]))
   end
 
   scope "/api", BackendWeb do

@@ -43,6 +43,7 @@ defmodule Backend.MixProject do
       {:ash, "~> 3.0"},
       {:ash_authentication, "~> 4.0"},
       {:ash_graphql, "~> 1.0"},
+      {:ash_phoenix, "~> 2.0"},
       {:ash_postgres, "~> 2.0"},
       {:bandit, "~> 1.5"},
       # {:corsica, "~> 2.1"},

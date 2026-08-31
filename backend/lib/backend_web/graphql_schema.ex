@@ -2,9 +2,9 @@ defmodule BackendWeb.GraphqlSchema do
   use Absinthe.Schema
 
   use AshGraphql,
-    domains: []
+    domains: [Backend.Accounts]
 
-  import_types Absinthe.Plug.Types
+  import_types(Absinthe.Plug.Types)
 
   query do
     # Custom Absinthe queries can be placed here
@@ -13,9 +13,9 @@ defmodule BackendWeb.GraphqlSchema do
     Remove me once you have a query of your own!
     """
     field :say_hello, :string do
-      resolve fn _, _, _ ->
+      resolve(fn _, _, _ ->
         {:ok, "Hello from AshGraphql!"}
-      end
+      end)
     end
   end
 

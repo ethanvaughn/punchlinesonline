@@ -68,6 +68,11 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :backend,
+         :token_signing_secret,
+         System.get_env("TOKEN_SIGNING_SECRET") ||
+           "D4rkKBlf7B5I2pw8fcdHJvrv/XK2bcdY6NUEsYdTFlQwpk+2osR8vJxtBzOAdQfo"
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key

@@ -8,8 +8,15 @@
       "version": "22"
     },
     "ghcr.io/devcontainers/features/common-utils:2": {
-      "installZsh": false,
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "installOhMyZshConfig": true,
+      "configureZshAsDefaultShell": true,
       "upgradePackages": false
+    },
+    "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
+      "plugins": "zsh-autosuggestions zsh-syntax-highlighting",
+      "omzPlugins": "https://github.com/zsh-users/zsh-autosuggestions.git https://github.com/zsh-users/zsh-syntax-highlighting.git"
     }
   },
   "forwardPorts": [4000, 5173, 5432],
@@ -29,6 +36,12 @@
         "ms-azuretools.vscode-docker"
       ],
       "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
         "editor.formatOnSave": true,
         "elixirLS.dialyzerEnabled": true
       }

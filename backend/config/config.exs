@@ -19,6 +19,8 @@ config :backend,
   ecto_repos: [Backend.Repo],
   generators: [timestamp_type: :utc_datetime, binary_id: true]
 
+config :backend, ash_domains: [Backend.Accounts]
+
 # Configure the endpoint
 config :backend, BackendWeb.Endpoint,
   url: [host: "localhost"],

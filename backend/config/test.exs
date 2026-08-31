@@ -1,5 +1,8 @@
 import Config
 
+config :backend,
+  token_signing_secret: "D4rkKBlf7B5I2pw8fcdHJvrv/XK2bcdY6NUEsYdTFlQwpk+2osR8vJxtBzOAdQfo"
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -8,7 +11,7 @@ import Config
 config :backend, Backend.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
+  hostname: "db",
   database: "backend_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
