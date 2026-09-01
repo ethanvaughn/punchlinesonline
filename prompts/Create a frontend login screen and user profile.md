@@ -1,1 +1,0 @@
-Create a frontend login screen, registration screen, and a user profile screen for the user to view their registration info. The login screen should have a link to register screen with standard verbiage to register if the user does not yet have an account.
