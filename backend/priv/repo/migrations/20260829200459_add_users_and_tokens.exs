@@ -9,37 +9,39 @@ defmodule Backend.Repo.Migrations.AddUsersAndTokens do
 
   def up do
     create table(:tokens, primary_key: false) do
-      add :updated_at, :utc_datetime_usec,
+      add(:updated_at, :utc_datetime_usec,
         null: false,
         default: fragment("(now() AT TIME ZONE 'utc')")
+      )
 
-      add :created_at, :utc_datetime_usec,
+      add(:created_at, :utc_datetime_usec,
         null: false,
         default: fragment("(now() AT TIME ZONE 'utc')")
+      )
 
-      add :extra_data, :map
-      add :purpose, :text, null: false
-      add :expires_at, :utc_datetime, null: false
-      add :subject, :text, null: false
-      add :jti, :text, null: false, primary_key: true
+      add(:extra_data, :map)
+      add(:purpose, :text, null: false)
+      add(:expires_at, :utc_datetime, null: false)
+      add(:subject, :text, null: false)
+      add(:jti, :text, null: false, primary_key: true)
     end
 
     create table(:users, primary_key: false) do
-      add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
-      add :email, :citext, null: false
-      add :first_name, :text, null: false
-      add :last_name, :text, null: false
-      add :hashed_password, :text, null: false
+      add(:id, :text, null: false, primary_key: true)
+      add(:email, :citext, null: false)
+      add(:first_name, :text, null: false)
+      add(:last_name, :text, null: false)
+      add(:hashed_password, :text, null: false)
     end
 
-    create unique_index(:users, [:email], name: "users_unique_email_index")
+    create(unique_index(:users, [:email], name: "users_unique_email_index"))
   end
 
   def down do
-    drop_if_exists unique_index(:users, [:email], name: "users_unique_email_index")
+    drop_if_exists(unique_index(:users, [:email], name: "users_unique_email_index"))
 
-    drop table(:users)
+    drop(table(:users))
 
-    drop table(:tokens)
+    drop(table(:tokens))
   end
 end

@@ -53,6 +53,7 @@ defmodule Backend.Accounts.UserTest do
 
     assert registration["errors"] == []
     registered_user = registration["result"]
+    assert registered_user["id"] =~ ~r/^users-[A-Za-z]{23}$/
     assert registered_user["email"] == credentials["email"]
     assert registered_user["first_name"] == credentials["first_name"]
     assert registered_user["last_name"] == credentials["last_name"]

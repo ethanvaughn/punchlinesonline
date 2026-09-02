@@ -59,6 +59,7 @@ defmodule Backend.MixProject do
       {:picosat_elixir, "~> 0.2"},
       {:postgrex, ">= 0.0.0"},
       {:req, "~> 0.5"},
+      {:shortuuid, "~> 4.1"},
       {:swoosh, "~> 1.16"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"}

@@ -21,7 +21,13 @@ defmodule Backend.Accounts.User do
   end
 
   attributes do
-    uuid_primary_key(:id)
+    attribute :id, :string do
+      allow_nil?(false)
+      primary_key?(true)
+      public?(true)
+      writable?(false)
+      default(fn -> Base52UUID.prefixed(AshPostgres.DataLayer.Info.table(__MODULE__)) end)
+    end
 
     attribute :email, :ci_string do
       allow_nil?(false)
