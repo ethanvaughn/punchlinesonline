@@ -6,6 +6,16 @@ defmodule Backend.Accounts.Token do
     extensions: [AshAuthentication.TokenResource],
     authorizers: [Ash.Policy.Authorizer]
 
+  attributes do
+    attribute :jti, :string do
+      allow_nil?(false)
+      primary_key?(true)
+      sensitive?(true)
+      public?(true)
+      default(fn -> Base52UUID.prefixed(AshPostgres.DataLayer.Info.table(__MODULE__)) end)
+    end
+  end
+
   postgres do
     table("tokens")
     repo(Backend.Repo)
