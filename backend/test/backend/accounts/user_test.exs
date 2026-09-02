@@ -78,6 +78,17 @@ defmodule Backend.Accounts.UserTest do
     assert current_user == registered_user
   end
 
+  test "returns a structured error for invalid credentials", %{conn: conn} do
+    {_, response} =
+      run_graphql(conn, @sign_in_query, %{
+        "email" => "unknown@example.com",
+        "password" => "incorrect password"
+      })
+
+    assert [%{"code" => "authentication_failed", "message" => "Authentication failed"}] =
+             response["errors"]
+  end
+
   defp run_graphql(conn, document, variables \\ %{}) do
     conn =
       conn
