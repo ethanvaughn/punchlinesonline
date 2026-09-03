@@ -121,6 +121,26 @@ npm run dev
 
 This keeps the API and UI running together while you work on both sides of the app.
 
+### Using psql
+
+Run this inside the devcontainer:
+
+```bash
+psql -h db -p 5432 -U postgres -d backend_dev
+```
+
+When prompted, enter:
+
+```bash
+postgres
+```
+
+For the test database:
+
+```bash
+psql -h db -p 5432 -U postgres -d backend_test
+```
+
 ## Useful commands
 
 ### Backend
