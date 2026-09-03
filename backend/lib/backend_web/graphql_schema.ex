@@ -6,6 +6,22 @@ defmodule BackendWeb.GraphqlSchema do
 
   import_types(Absinthe.Plug.Types)
 
+  object :punchline do
+    field(:id, non_null(:string))
+    field(:line, :string)
+    field(:created_by, non_null(:string))
+    field(:inserted_at, non_null(:datetime))
+    field(:updated_by, non_null(:string))
+    field(:updated_at, non_null(:datetime))
+    field(:is_deleted, non_null(:boolean))
+    field(:deleted_by, :string)
+    field(:deleted_at, :datetime)
+  end
+
+  input_object :punchline_input do
+    field(:line, :string)
+  end
+
   query do
     # Custom Absinthe queries can be placed here
     @desc """
@@ -17,10 +33,28 @@ defmodule BackendWeb.GraphqlSchema do
         {:ok, "Hello from AshGraphql!"}
       end)
     end
+
+    field :punchlines, non_null(list_of(non_null(:punchline))) do
+      resolve(&BackendWeb.GraphQL.PunchlineResolver.list/3)
+    end
   end
 
   mutation do
-    # Custom Absinthe mutations can be placed here
+    field :create_punchline, :punchline do
+      arg(:input, non_null(:punchline_input))
+      resolve(&BackendWeb.GraphQL.PunchlineResolver.create/3)
+    end
+
+    field :update_punchline, :punchline do
+      arg(:id, non_null(:string))
+      arg(:input, non_null(:punchline_input))
+      resolve(&BackendWeb.GraphQL.PunchlineResolver.update/3)
+    end
+
+    field :delete_punchline, :punchline do
+      arg(:id, non_null(:string))
+      resolve(&BackendWeb.GraphQL.PunchlineResolver.delete/3)
+    end
   end
 
   subscription do
