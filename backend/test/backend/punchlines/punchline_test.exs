@@ -64,6 +64,8 @@ defmodule Backend.Punchlines.PunchlineTest do
       id
       line
       created_by
+      owner_name
+      inserted_at
       updated_by
       is_deleted
     }
@@ -133,9 +135,12 @@ defmodule Backend.Punchlines.PunchlineTest do
       run_graphql(Phoenix.ConnTest.build_conn(), @punchlines_query)
 
     assert Enum.map(listed_punchlines, & &1["id"]) == [
-             second_punchline["id"],
-             third_punchline["id"]
+             third_punchline["id"],
+             second_punchline["id"]
            ]
+
+    assert Enum.all?(listed_punchlines, &(&1["owner_name"] == "P Tester"))
+    assert Enum.all?(listed_punchlines, &is_binary(&1["inserted_at"]))
 
     assert Enum.find(listed_punchlines, &(&1["id"] == second_punchline["id"]))["line"] ==
              "Updated punchline"
