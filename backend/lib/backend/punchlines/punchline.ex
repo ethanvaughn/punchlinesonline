@@ -6,7 +6,6 @@ defmodule Backend.Punchlines.Punchline do
   schema "punchlines" do
     field(:id, :string, primary_key: true)
     field(:line, :string)
-    field(:owner_name, :string, virtual: true)
 
     common_fields()
   end
