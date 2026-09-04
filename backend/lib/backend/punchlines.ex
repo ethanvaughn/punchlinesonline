@@ -5,7 +5,15 @@ defmodule Backend.Punchlines do
   alias Backend.Repo
 
   def list_punchlines do
-    from(punchline in Punchline, where: not punchline.is_deleted, order_by: punchline.inserted_at)
+    from(punchline in Punchline,
+      join: user in "users",
+      on: user.id == punchline.created_by,
+      where: not punchline.is_deleted,
+      order_by: [desc: punchline.inserted_at],
+      select_merge: %{
+        owner_name: fragment("CONCAT(LEFT(?, 1), ' ', ?)", user.first_name, user.last_name)
+      }
+    )
     |> Repo.all()
   end
 

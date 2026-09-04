@@ -10,6 +10,7 @@ defmodule BackendWeb.GraphqlSchema do
     field(:id, non_null(:string))
     field(:line, :string)
     field(:created_by, non_null(:string))
+    field(:owner_name, non_null(:string))
     field(:inserted_at, non_null(:datetime))
     field(:updated_by, non_null(:string))
     field(:updated_at, non_null(:datetime))
