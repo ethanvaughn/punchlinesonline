@@ -10,7 +10,16 @@ defmodule Backend.Punchlines do
       on: user.id == punchline.created_by,
       where: not punchline.is_deleted,
       order_by: [desc: punchline.inserted_at],
-      select_merge: %{
+      select: %{
+        id: punchline.id,
+        line: punchline.line,
+        created_by: punchline.created_by,
+        updated_by: punchline.updated_by,
+        is_deleted: punchline.is_deleted,
+        deleted_by: punchline.deleted_by,
+        deleted_at: punchline.deleted_at,
+        inserted_at: punchline.inserted_at,
+        updated_at: punchline.updated_at,
         owner_name: fragment("CONCAT(LEFT(?, 1), ' ', ?)", user.first_name, user.last_name)
       }
     )

@@ -47,6 +47,6 @@
       }
     }
   },
-  "postCreateCommand": "bash -lc 'install -m 0644 .devcontainer/.zshrc ~/.zshrc && install -m 0644 .devcontainer/.psqlrc ~/.psqlrc && git config --global core.pager cat && mix --version && node --version && npm --version'",
+  "postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
   "shutdownAction": "stopCompose"
 }
