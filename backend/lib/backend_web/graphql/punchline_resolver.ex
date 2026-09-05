@@ -17,7 +17,7 @@ defmodule BackendWeb.GraphQL.PunchlineResolver do
   def create(_, %{input: input}, resolution) do
     with {:ok, actor_id} <- actor_id(resolution),
          {:ok, punchline} <- Punchlines.create_punchline(input, actor_id) do
-      {:ok, punchline}
+      {:ok, Punchlines.get(punchline.id)}
     end
   end
 

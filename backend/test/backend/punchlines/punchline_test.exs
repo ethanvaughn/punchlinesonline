@@ -30,6 +30,7 @@ defmodule Backend.Punchlines.PunchlineTest do
       id
       line
       created_by
+      owner_name
       is_deleted
     }
   }
@@ -107,6 +108,7 @@ defmodule Backend.Punchlines.PunchlineTest do
     assert punchline["is_deleted"] == false
     assert is_binary(punchline["id"])
     assert is_binary(punchline["created_by"])
+    assert punchline["owner_name"] == "P Tester"
   end
 
   test "creates, deletes, updates, and lists punchlines through GraphQL", %{conn: conn} do
