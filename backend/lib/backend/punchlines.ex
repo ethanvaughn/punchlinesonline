@@ -26,6 +26,10 @@ defmodule Backend.Punchlines do
     |> Repo.all()
   end
 
+  def get(id) do
+    Repo.get(Punchline, id)
+  end
+
   def create_punchline(attrs, actor_id) do
     %Punchline{}
     |> Punchline.changeset(attrs)

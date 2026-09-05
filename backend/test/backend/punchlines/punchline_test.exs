@@ -72,6 +72,43 @@ defmodule Backend.Punchlines.PunchlineTest do
   }
   """
 
+  test "creates and gets a punchline through GraphQL", %{conn: conn} do
+    credentials = %{
+      "email" => "punchline-#{System.unique_integer([:positive])}@example.com",
+      "first_name" => "Punchline",
+      "last_name" => "Tester",
+      "password" => "correct horse battery staple"
+    }
+
+    {_, %{"data" => %{"register_with_password" => registration}}} =
+      run_graphql(conn, @register_query, %{"input" => credentials})
+
+    assert registration["errors"] == []
+    assert is_binary(registration["result"]["id"])
+
+    {_, %{"data" => %{"sign_in_with_password" => signed_in_user}}} =
+      run_graphql(Phoenix.ConnTest.build_conn(), @sign_in_query, %{
+        "email" => credentials["email"],
+        "password" => credentials["password"]
+      })
+
+    authenticated_conn =
+      Phoenix.ConnTest.build_conn()
+      |> Plug.Conn.put_req_header("authorization", "Bearer #{signed_in_user["token"]}")
+
+    {_, %{"data" => %{"create_punchline" => punchline}}} =
+      run_graphql(authenticated_conn, @create_punchline_query, %{
+        "input" => %{"line" => "First punchline"}
+      })
+
+    IO.inspect(punchline)
+
+    assert punchline["line"] == "First punchline"
+    assert punchline["is_deleted"] == false
+    assert is_binary(punchline["id"])
+    assert is_binary(punchline["created_by"])
+  end
+
   test "creates, deletes, updates, and lists punchlines through GraphQL", %{conn: conn} do
     credentials = %{
       "email" => "punchline-#{System.unique_integer([:positive])}@example.com",
