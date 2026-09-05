@@ -27,7 +27,25 @@ defmodule Backend.Punchlines do
   end
 
   def get(id) do
-    Repo.get(Punchline, id)
+    from(punchline in Punchline,
+      join: user in "users",
+      on: user.id == punchline.created_by,
+      where: punchline.id == ^id,
+      where: not punchline.is_deleted,
+      select: %{
+        id: punchline.id,
+        line: punchline.line,
+        created_by: punchline.created_by,
+        updated_by: punchline.updated_by,
+        is_deleted: punchline.is_deleted,
+        deleted_by: punchline.deleted_by,
+        deleted_at: punchline.deleted_at,
+        inserted_at: punchline.inserted_at,
+        updated_at: punchline.updated_at,
+        owner_name: fragment("CONCAT(LEFT(?, 1), ' ', ?)", user.first_name, user.last_name)
+      }
+    )
+    |> Repo.one()
   end
 
   def create_punchline(attrs, actor_id) do
