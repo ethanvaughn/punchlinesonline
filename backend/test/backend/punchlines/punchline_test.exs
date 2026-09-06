@@ -102,7 +102,7 @@ defmodule Backend.Punchlines.PunchlineTest do
         "input" => %{"line" => "First punchline"}
       })
 
-    IO.inspect(punchline)
+    # IO.inspect(punchline)
 
     assert punchline["line"] == "First punchline"
     assert punchline["is_deleted"] == false
