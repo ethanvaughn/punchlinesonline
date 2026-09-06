@@ -38,6 +38,11 @@ defmodule BackendWeb.GraphqlSchema do
     field :punchlines, non_null(list_of(non_null(:punchline))) do
       resolve(&BackendWeb.GraphQL.PunchlineResolver.list/3)
     end
+
+    field :punchline, :punchline do
+      arg(:id, non_null(:string))
+      resolve(&BackendWeb.GraphQL.PunchlineResolver.get/3)
+    end
   end
 
   mutation do

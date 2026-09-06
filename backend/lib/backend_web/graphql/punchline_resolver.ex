@@ -7,10 +7,17 @@ defmodule BackendWeb.GraphQL.PunchlineResolver do
     {:ok, Punchlines.list_punchlines()}
   end
 
+  def get(_, %{id: id}, _) do
+    case Punchlines.get(id) do
+      nil -> {:error, "Punchline not found"}
+      punchline -> {:ok, punchline}
+    end
+  end
+
   def create(_, %{input: input}, resolution) do
     with {:ok, actor_id} <- actor_id(resolution),
          {:ok, punchline} <- Punchlines.create_punchline(input, actor_id) do
-      {:ok, punchline}
+      {:ok, Punchlines.get(punchline.id)}
     end
   end
 
