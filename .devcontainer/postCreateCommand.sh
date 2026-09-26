@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+git -C "$HOME/.oh-my-zsh" pull --ff-only
+
 install -m 0644 .devcontainer/.zshrc ~/.zshrc
 install -m 0644 .devcontainer/.psqlrc ~/.psqlrc
 bash .devcontainer/configure-git.sh
